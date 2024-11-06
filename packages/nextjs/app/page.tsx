@@ -16,7 +16,7 @@ const Home: NextPage = () => {
 
   const checkOwnership = async () => {
     try {
-      const response = await fetch('/configure/api/checkOwnership', {
+      const response = await fetch('/api/checkOwnership', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
