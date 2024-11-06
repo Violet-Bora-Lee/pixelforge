@@ -6,9 +6,29 @@ import { Address } from "~~/components/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
 import { Address as AddressType } from "@starknet-react/chains";
 import Image from "next/image";
+import { useState } from "react";
 
 const Home: NextPage = () => {
   const connectedAddress = useAccount();
+  const [response, setResponse] = useState<string>("");
+  const [ethAddress, setEthAddress] = useState<string>("");
+
+  const checkOwnership = async () => {
+    try {
+      const response = await fetch('/configure/api/checkOwnership', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ address: ethAddress }),
+      });
+      const data = await response.json();
+      setResponse(`NFT Balance: ${data.balance}, Has NFT: ${data.hasNFT}`);
+    } catch (error) {
+      console.error('Error fetching ownership:', error);
+      setResponse('Error checking ownership');
+    }
+  };
 
   return (
     <>
@@ -37,6 +57,26 @@ const Home: NextPage = () => {
         </div>
 
         <div className="bg-container flex-grow w-full mt-16 px-8 py-12">
+          <div className="flex flex-col items-center mb-8">
+            <input
+              type="text"
+              value={ethAddress}
+              onChange={(e) => setEthAddress(e.target.value)}
+              placeholder="Enter Ethereum address"
+              className="input input-bordered w-full max-w-xs mb-4"
+            />
+            <button 
+              onClick={checkOwnership}
+              className="btn btn-primary mb-4"
+              disabled={!ethAddress}
+            >
+              Check Ownership
+            </button>
+            {response && (
+              <p className="text-center">{response}</p>
+            )}
+          </div>
+
           <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
             <div className="flex flex-col bg-base-100 relative text-[12px] px-10 py-10 text-center items-center max-w-xs rounded-3xl border border-gradient">
               <div className="trapeze"></div>
