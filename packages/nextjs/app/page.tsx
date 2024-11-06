@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import { Address } from "~~/components/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
 import { Address as AddressType } from "@starknet-react/chains";
+import { UseContractResult, useContract } from "@starknet-react/core";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -44,16 +45,6 @@ const Home: NextPage = () => {
             </p>
             <Address address={connectedAddress.address as AddressType} />
           </div>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="bg-underline italic text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.cairo
-            </code>{" "}
-            in{" "}
-            <code className="bg-underline italic text-base font-bold max-w-full break-words break-all inline-block">
-              packages/snfoundry/contracts/src
-            </code>
-          </p>
         </div>
 
         <div className="bg-container flex-grow w-full mt-16 px-8 py-12">

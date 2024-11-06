@@ -43,9 +43,10 @@ import { green } from "./helpers/colorize-log";
  */
 const deployScript = async (): Promise<void> => {
   await deployContract({
-    contract: "YourContract",
+    contract: "WardrobeKey",
     constructorArgs: {
       owner: deployer.address,
+      base_uri: "https://pixelforge.io/wardrobe-key/", // TODO: change this to the actual base uri
     },
   });
 };

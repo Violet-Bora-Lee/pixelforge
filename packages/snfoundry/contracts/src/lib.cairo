@@ -1,5 +1,5 @@
-mod YourContract;
+mod WardrobeKey;
 #[cfg(test)]
 mod test {
-    mod TestContract;
+    mod WardrobeKeyTest;
 }
