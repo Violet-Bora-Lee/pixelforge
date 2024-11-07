@@ -5,7 +5,7 @@ import {
   CheckCircleIcon,
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/outline";
-import { displayTxResult } from "~~/app/debug/_components/contract";
+import { displayTxResult } from "~~/app/dev/debug/_components/contract";
 
 export const TxReceipt = (
   txResult:
@@ -14,7 +14,7 @@ export const TxReceipt = (
     | bigint
     | Record<string, any>
     | InvokeTransactionReceiptResponse
-    | undefined,
+    | undefined
 ) => {
   const [txResultCopied, setTxResultCopied] = useState(false);
 

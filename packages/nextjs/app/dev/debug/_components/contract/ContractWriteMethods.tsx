@@ -1,5 +1,5 @@
 import { Abi } from "abi-wan-kanabi";
-import { WriteOnlyFunctionForm } from "~~/app/debug/_components/contract";
+import { WriteOnlyFunctionForm } from "~~/app/dev/debug/_components/contract";
 import {
   Contract,
   ContractName,
@@ -19,7 +19,7 @@ export const ContractWriteMethods = ({
 
   const functionsToDisplay = getFunctionsByStateMutability(
     (deployedContractData.abi || []) as Abi,
-    "external",
+    "external"
   ).map((fn) => {
     return {
       fn,

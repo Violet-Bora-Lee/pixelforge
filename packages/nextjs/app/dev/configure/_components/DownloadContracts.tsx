@@ -110,7 +110,7 @@ export default function DownloadContracts() {
               </li>
               <li className="pl-3">
                 Use the{" "}
-                <Link href={"/debug"} className="text-function">
+                <Link href={"/dev/debug"} className="text-function">
                   <code>/debug</code>
                 </Link>{" "}
                 page to interact with and test the contract using the scaffold

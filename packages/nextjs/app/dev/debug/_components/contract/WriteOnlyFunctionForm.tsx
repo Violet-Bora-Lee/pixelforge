@@ -11,7 +11,7 @@ import {
   FormErrorMessageState,
   getTopErrorMessage,
   isError,
-} from "~~/app/debug/_components/contract";
+} from "~~/app/dev/debug/_components/contract";
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
 import {
   useSendTransaction,
@@ -42,7 +42,7 @@ export const WriteOnlyFunctionForm = ({
   contractAddress,
 }: WriteOnlyFunctionFormProps) => {
   const [form, setForm] = useState<Record<string, any>>(() =>
-    getInitialFormState(abiFunction),
+    getInitialFormState(abiFunction)
   );
   const [formErrorMessage, setFormErrorMessage] =
     useState<FormErrorMessageState>({});
@@ -56,7 +56,7 @@ export const WriteOnlyFunctionForm = ({
       !chain ||
       chain?.network !== targetNetwork.network ||
       walletStatus === "disconnected",
-    [chain, targetNetwork.network, walletStatus],
+    [chain, targetNetwork.network, walletStatus]
   );
 
   const { contract: contractInstance } = useContract({
@@ -88,10 +88,10 @@ export const WriteOnlyFunctionForm = ({
               ? [
                   contractInstance.populate(
                     abiFunction.name,
-                    getArgsAsStringInputFromForm(form),
+                    getArgsAsStringInputFromForm(form)
                   ),
                 ]
-              : [],
+              : []
           );
         await writeTxn(makeWriteWithParams);
         onChange();
@@ -102,7 +102,7 @@ export const WriteOnlyFunctionForm = ({
 
         console.error(
           "⚡️ ~ file: WriteOnlyFunctionForm.tsx:handleWrite ~ error",
-          message,
+          message
         );
       }
     }

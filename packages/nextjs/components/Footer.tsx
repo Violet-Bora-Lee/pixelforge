@@ -59,7 +59,7 @@ export const Footer = () => {
               </>
             )}
             <Link
-              href={"/configure"}
+              href={"/dev/configure"}
               passHref
               className="btn btn-sm font-normal gap-1 cursor-pointer border border-[#32BAC4] shadow-none"
             >

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useLocalStorage } from "usehooks-ts";
-import { ContractUI } from "~~/app/debug/_components/contract";
+import { ContractUI } from "~~/app/dev/debug/_components/contract";
 import { ContractName } from "~~/utils/scaffold-stark/contract";
 import { getAllContracts } from "~~/utils/scaffold-stark/contractsData";
 
@@ -14,7 +14,7 @@ export function DebugContracts() {
   const [selectedContract, setSelectedContract] = useLocalStorage<ContractName>(
     selectedContractStorageKey,
     contractNames[0],
-    { initializeWithValue: false },
+    { initializeWithValue: false }
   );
 
   useEffect(() => {

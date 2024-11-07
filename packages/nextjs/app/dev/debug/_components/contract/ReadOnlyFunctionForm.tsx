@@ -12,7 +12,7 @@ import {
   FormErrorMessageState,
   isError,
   getTopErrorMessage,
-} from "~~/app/debug/_components/contract";
+} from "~~/app/dev/debug/_components/contract";
 import { AbiFunction } from "~~/utils/scaffold-stark/contract";
 import { BlockNumber } from "starknet";
 import { useContract, useReadContract } from "@starknet-react/core";
@@ -30,7 +30,7 @@ export const ReadOnlyFunctionForm = ({
   abi,
 }: ReadOnlyFunctionFormProps) => {
   const [form, setForm] = useState<Record<string, any>>(() =>
-    getInitialFormState(abiFunction),
+    getInitialFormState(abiFunction)
   );
   const [inputValue, setInputValue] = useState<any | undefined>(undefined);
   const [formErrorMessage, setFormErrorMessage] =
