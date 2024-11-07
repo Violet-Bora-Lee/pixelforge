@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Scaffold-Stark",
-  description: "Fast track your starknet journey",
-  icons: "/logo.ico",
+  title: "Pixel Forge",
+  description: "Advanced avatar customization tool designed for the Starknet gaming ecosystem",
+  icons: "/pixel-forge-logo.png",
 };
 
-const ScaffoldStarkApp = ({ children }: { children: React.ReactNode }) => {
+const PixelForgeApp = ({ children }: { children: React.ReactNode }) => {
   return (
     <html suppressHydrationWarning>
       <body>
@@ -16,4 +16,4 @@ const ScaffoldStarkApp = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default ScaffoldStarkApp;
+export default PixelForgeApp;
