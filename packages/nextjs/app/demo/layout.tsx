@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import { Providers } from "~~/components/providers";
+import { Providers } from "~~/components/Providers";
 import Header from "~~/components/demo/Header";
 import Footer from "~~/components/demo/Footer";
 import Image from "next/image";
