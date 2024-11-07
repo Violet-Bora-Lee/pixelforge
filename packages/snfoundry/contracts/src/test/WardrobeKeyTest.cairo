@@ -39,10 +39,10 @@ fn test_minting() {
     
     // Start acting as owner
     start_cheat_caller_address(contract_address, OWNER());
-    
+
     // Mint token ID 1 to USER
     dispatcher.mint(USER());
-    
+
     // Verify ownership
     assert(erc721_dispatcher.owner_of(1) == USER(), 'Wrong token owner');
     assert(erc721_dispatcher.balance_of(USER()) == 1, 'Wrong balance');
@@ -60,4 +60,25 @@ fn test_mint_not_owner() {
     start_cheat_caller_address(contract_address, USER());
     dispatcher.mint(USER());
     stop_cheat_caller_address(contract_address);
-} 
+}
+
+#[test]
+#[should_panic(expected: ('Transfer not allowed',))]
+fn test_cant_transfer() {
+    let contract_address = deploy_wardrobe_key();
+    let dispatcher = IWardrobeKeyDispatcher { contract_address };
+    let erc721_dispatcher = ERC721ABIDispatcher { contract_address };
+    // Start acting as owner
+    start_cheat_caller_address(contract_address, OWNER());
+
+    // Mint token ID 1 to USER
+    dispatcher.mint(USER());
+
+    // Verify balance
+    assert(erc721_dispatcher.balance_of(USER()) == 1, 'Wrong balance');
+
+    // Try to transfer from USER to OWNER
+    stop_cheat_caller_address(contract_address);
+    start_cheat_caller_address(contract_address, USER());
+    erc721_dispatcher.transfer_from(USER(), OWNER(), 1);
+}

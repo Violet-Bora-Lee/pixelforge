@@ -8,9 +8,11 @@ pub trait IWardrobeKey<TContractState> {
 #[starknet::contract]
 mod WardrobeKey {
     use openzeppelin_access::ownable::OwnableComponent;
-    use openzeppelin_token::erc721::{ERC721Component, ERC721HooksEmptyImpl};
+    use openzeppelin_token::erc721::ERC721Component;
+    use openzeppelin_token::erc721::ERC721Component::ERC721HooksTrait;
     use openzeppelin_introspection::src5::SRC5Component;
     use starknet::ContractAddress;
+    use core::num::traits::Zero;
     use super::{IWardrobeKey};
 
     component!(path: OwnableComponent, storage: ownable, event: OwnableEvent);
@@ -18,10 +20,7 @@ mod WardrobeKey {
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
 
     #[abi(embed_v0)]
-    impl SRC5Impl = SRC5Component::SRC5Impl<ContractState>;
-
-    #[abi(embed_v0)]
-    impl ERC721Impl = ERC721Component::ERC721Impl<ContractState>;
+    impl ERC721MixinImpl = ERC721Component::ERC721MixinImpl<ContractState>;
     impl ERC721InternalImpl = ERC721Component::InternalImpl<ContractState>;
     
     #[abi(embed_v0)]
@@ -67,5 +66,26 @@ mod WardrobeKey {
             self.last_token_id.write(new_token_id);
             self.erc721.mint(to, new_token_id);
         }
+    }
+
+    impl ERC721HooksImpl of ERC721HooksTrait<ContractState> {
+        fn before_update(
+            ref self: ERC721Component::ComponentState<ContractState>,
+            to: ContractAddress,
+            token_id: u256,
+            auth: ContractAddress
+        ) {
+            // Don't allow updates not from zero address (i.e. only mints)
+            // Self-burns are disallowed by ERC721 spec
+            let from = self._owner_of(token_id);
+            assert(from.is_zero(), 'Transfer not allowed');
+        }
+
+        fn after_update(
+            ref self: ERC721Component::ComponentState<ContractState>,
+            to: ContractAddress,
+            token_id: u256,
+            auth: ContractAddress
+        ) {}
     }
 }
