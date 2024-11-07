@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
   const [isOverDropZone, setIsOverDropZone] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -38,6 +40,12 @@ export default function Page() {
     }
   };
 
+  useEffect(() => {
+    if (showSuccess) {
+      router.push("/demo/opened-closet"); // Replace with your target page path
+    }
+  }, [showSuccess, router]);
+
   return (
     <div className="flex flex-col w-full min-h-full mt-[125px] mb-[125px] justify-center items-center relative">
       <div className="flex flex-col justify-start items-center gap-2 w-full overflow-y-auto mt-[-10px]">
@@ -59,22 +67,16 @@ export default function Page() {
 
             <div
               ref={dropZoneRef}
-              className={`w-1/2 h-fit flex items-center justify-center
-            ${isOverDropZone ? "border-green-400 bg-green-50" : "border-gray-300"}`}
+              className={`w-1/2 h-fit flex items-center justify-center 
+            ${isOverDropZone ? "transform scale-x-105" : "transform scale-100"}`}
             >
-                <img
-                  src="/demo/closet.png"
-                  alt="Draggable Item"
-                  className="w-full h-full object-cover rounded-lg"
-                />
+              <img
+                src="/demo/closet.png"
+                alt="Draggable Item"
+                className="w-full h-full object-cover rounded-lg"
+              />
             </div>
           </div>
-
-          {showSuccess && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded">
-              dropped successfully!
-            </div>
-          )}
         </div>
       </div>
     </div>
