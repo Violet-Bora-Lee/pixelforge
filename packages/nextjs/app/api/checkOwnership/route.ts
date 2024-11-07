@@ -4,6 +4,7 @@ import { mainnet } from 'viem/chains'; // Change to your target chain
 import { erc721Abi } from 'viem';
 
 // Configure your NFT contract address here
+// TODO move to env
 const NFT_CONTRACT_ADDRESS = '0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D';
 
 const client = createPublicClient({

@@ -31,6 +31,27 @@ const Home: NextPage = () => {
     }
   };
 
+  const mintKey = async () => {
+    try {
+      const response = await fetch('/api/mintKey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ address: connectedAddress.address }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        setResponse(`Successfully minted key! Transaction hash: ${data.transaction_hash}`);
+      } else {
+        setResponse(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      console.error('Error minting key:', error);
+      setResponse('Error minting key');
+    }
+  };
+
   return (
     <>
       <div className="flex items-center flex-col flex-grow pt-10">
@@ -48,6 +69,16 @@ const Home: NextPage = () => {
         </div>
 
         <div className="bg-container flex-grow w-full mt-16 px-8 py-12">
+          <div className="flex flex-col items-center mb-8">
+            <button 
+              onClick={mintKey}
+              className="btn btn-primary mb-4"
+              disabled={!connectedAddress.address}
+            >
+              Mint Key
+            </button>
+          </div>
+
           <div className="flex flex-col items-center mb-8">
             <input
               type="text"

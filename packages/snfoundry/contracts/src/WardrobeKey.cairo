@@ -2,7 +2,7 @@ use starknet::{ContractAddress};
 
 #[starknet::interface]
 pub trait IWardrobeKey<TContractState> {
-    fn mint(ref self: TContractState, to: ContractAddress, tokenId: u256);
+    fn mint(ref self: TContractState, to: ContractAddress);
 }
 
 #[starknet::contract]
@@ -44,7 +44,7 @@ mod WardrobeKey {
 
     #[storage]
     struct Storage {
-        greeting: ByteArray,
+        last_token_id: u256,
         #[substorage(v0)]
         erc721: ERC721Component::Storage,
         #[substorage(v0)]
@@ -61,8 +61,11 @@ mod WardrobeKey {
 
     #[abi(embed_v0)]
     impl WardrobeKeyImpl of IWardrobeKey<ContractState> {
-        fn mint(ref self: ContractState, to: ContractAddress, tokenId: u256) {
-            self.erc721.mint(to, tokenId);
+        fn mint(ref self: ContractState, to: ContractAddress) {
+            self.ownable.assert_only_owner();
+            let new_token_id = self.last_token_id.read() + 1;
+            self.last_token_id.write(new_token_id);
+            self.erc721.mint(to, new_token_id);
         }
     }
 }
