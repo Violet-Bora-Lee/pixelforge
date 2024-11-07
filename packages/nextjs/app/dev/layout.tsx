@@ -1,11 +1,15 @@
 import "./globals.css";
-import { ScaffoldStarkAppWithProviders } from "~~/components/ScaffoldStarkAppWithProviders";
+
 import { ThemeProvider } from "~~/components/ThemeProvider";
+import { Providers } from '~~/components/Providers';
+import { ScaffoldStarkApp } from '~~/components/ScaffoldStarkApp';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider enableSystem>
-      <ScaffoldStarkAppWithProviders>{children}</ScaffoldStarkAppWithProviders>
+      <Providers>
+        <ScaffoldStarkApp>{children}</ScaffoldStarkApp>
+      </Providers>
     </ThemeProvider>
   );
 };
