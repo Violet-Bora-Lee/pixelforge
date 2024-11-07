@@ -2,15 +2,15 @@
 
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function Page() {
   const [images, setImages] = useState([
-    { id: "image-1", src: "/1.png" },
-    { id: "image-2", src: "/2.png" },
-    { id: "image-3", src: "/3.png" },
-    { id: "image-4", src: "/4.png" },
-    { id: "image-5", src: "/5.png" },
+    { id: "image-1", src: "/demo/1.png" },
+    { id: "image-2", src: "/demo/2.png" },
+    { id: "image-3", src: "/demo/3.png" },
+    { id: "image-4", src: "/demo/4.png" },
+    { id: "image-5", src: "/demo/5.png" },
   ]);
 
   const handleDragEnd = (result: any) => {
@@ -24,9 +24,18 @@ export default function Page() {
   };
 
   return (
-    <div className="flex w-full min-h-full mt-[125px] mb-[125px] justify-center items-center">
-      <div className="flex flex-col justify-start items-center gap-6 w-full overflow-y-auto mt-[-120px]">
-        <div className="w-4/5">
+    <div className="flex flex-col w-full min-h-full mt-[125px] mb-[125px] justify-center items-center relative">
+      <div className="w-4/5 items-center">
+        <Image
+          className="flex w-full items-center"
+          alt="key hanger image"
+          src="/demo/key-hanger.png"
+          width={350}
+          height={50}
+        />
+      </div>
+      <div className="flex flex-col justify-start items-center gap-6 w-full overflow-y-auto mt-[-10px]">
+        <div className="w-4/5 relative">
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="droppable" direction="horizontal">
               {(provided) => (
