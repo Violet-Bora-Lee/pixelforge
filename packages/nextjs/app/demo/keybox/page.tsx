@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import Image from 'next/image';
 
 export default function Page() {
   const [images, setImages] = useState([
@@ -47,10 +48,12 @@ export default function Page() {
                           {...provided.dragHandleProps}
                           className="cursor-move"
                         >
-                          <img
+                          <Image
+                            width={100}
+                            height={100}
                             src={image.src}
                             alt={`Image ${index + 1}`}
-                            className="w-32 h-32 object-cover rounded-lg"
+                            className="w-32 h-32 rounded-lg"
                           />
                         </div>
                       )}

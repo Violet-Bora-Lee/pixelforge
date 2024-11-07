@@ -1,4 +1,5 @@
 import React from "react";
+import Image from 'next/image';
 
 
 export default function Page() {
@@ -7,7 +8,9 @@ export default function Page() {
       <div className="flex flex-col justify-start items-center gap-6 w-full overflow-y-auto mt-[-120px]">
         <div className="w-4/5 ">
           <div className="w-full rounded-2xl flex justify-center items-center p-4 aspect-h-1">
-            <img
+            <Image
+              width={250}
+              height={250}
               src="/redeemed-key.png"
               alt="Square"
               className="w-full h-full object-cover"

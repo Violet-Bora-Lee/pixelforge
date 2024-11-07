@@ -18,6 +18,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               src="/pixel-forge-logo.png"
               width={150}
               height={332}
+              priority
+              style={{ width: "auto", height: "auto" }}
             />
           </div>
         </main>
