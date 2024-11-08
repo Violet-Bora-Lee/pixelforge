@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation';
 
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
@@ -11,6 +12,8 @@ import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWri
 
 export default function Page() {
   useAutoConnect();
+
+  const router = useRouter();
 
   const { account: connectedAddress, address, status } = useAccount();
 
@@ -53,6 +56,12 @@ export default function Page() {
     console.log("status: ", status);
   }, [connectedAddress]);
 
+  const sendMagicLink = async () => {
+    console.log("send magic link");
+    wrapInTryCatch(mintNewKey, "mintNewKey");
+    router.push('/demo/minting-key');
+  }
+
   return (
     <div className="flex w-full min-h-full mb-[125px] justify-center items-center">
       <div className="flex flex-col justify-start items-center gap-6 w-full overflow-y-auto mt-[-60px]">
@@ -83,7 +92,7 @@ export default function Page() {
               />
               <button 
                 className="border border-[#9b94b3] w-full py-1 px-6 rounded-2xl text-gray-500 text-xl"
-                onClick={wrapInTryCatch(mintNewKey, "mintNewKey")}
+                onClick={sendMagicLink}
                 >
                 send magic link!
               </button>
