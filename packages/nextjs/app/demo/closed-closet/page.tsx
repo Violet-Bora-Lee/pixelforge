@@ -56,10 +56,12 @@ export default function Page() {
                 ref={dragRef}
                 className={`cursor-move ${isDragging ? "opacity-75" : "opacity-100"}`}
               >
-                <img
+                <Image
+                  width={130}
+                  height={20}
                   src="/demo/keys/bayc-horizontal.png"
                   alt="Draggable Item"
-                  className="w-[130px] object-cover rounded-lg z-10"
+                  className="object-cover rounded-lg z-10"
                 />
               </div>
             </Draggable>
@@ -69,7 +71,9 @@ export default function Page() {
               className={`w-2/5 h-fit flex items-center justify-center 
             ${isOverDropZone ? "transform scale-x-105" : "transform scale-100"}`}
             >
-              <img
+              <Image
+                width={130}
+                height={200}
                 src="/demo/closet.png"
                 alt="Draggable Item"
                 className="w-full h-full object-cover rounded-lg"
