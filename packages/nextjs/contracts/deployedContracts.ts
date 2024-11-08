@@ -7,7 +7,7 @@ const deployedContracts = {
   devnet: {
     WardrobeKeyBoredApes: {
       address:
-        "0x2689bff5ce4019fd20128efa216543417bcf9a92331d0c22a57f2496fccbbcb",
+        "0x33d3b35ca3f494404002eebfbd06fa7a69e96bb0d5820a7378ae7d2815fd0a1",
       abi: [
         {
           type: "impl",
@@ -669,7 +669,7 @@ const deployedContracts = {
     },
     WardrobeKeyOxford: {
       address:
-        "0x1a38357107f6bc7dd0e0c4329d982eaf2e072c1bb9d11e63f564060ecdba09c",
+        "0x742835020b4071eabe0e45735552db6eb7ab6f93dda24f05fd5110123359880",
       abi: [
         {
           type: "impl",
@@ -1331,7 +1331,7 @@ const deployedContracts = {
     },
     PixelForgeAvatar: {
       address:
-        "0x40bb5600960c123cbf321111b02b4f8ff141f418e75de027fd72687d577e120",
+        "0x31e1d68dbdb60f7b147cdcde98ae596cc2d0718d7652a662ad6b3fa14002f2b",
       abi: [
         {
           type: "impl",

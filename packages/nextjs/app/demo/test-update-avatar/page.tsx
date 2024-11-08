@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Image from 'next/image';
 import { useAccount } from "~~/hooks/useAccount";
 import { Address as AddressType } from "@starknet-react/chains";
-import { Abi, useReadContract } from "@starknet-react/core";
+import { Abi, useContract, useReadContract, useSendTransaction } from "@starknet-react/core";
 import { shortString } from "starknet";
+import { CustomConnectButton } from "~~/components/scaffold-stark/CustomConnectButton";
 
 import deployedContracts from '~~/contracts/deployedContracts';
 
@@ -18,8 +19,18 @@ export default function Page() {
   const [selectedAffiliate, setSelectedAffiliate] = useState<number | null>(null);
 
   const updateSelectedItems = async () => {
+    console.log("calls", calls);
     console.log("updateSelectedItems", selectedItems);
     console.log("readData", readData);
+    console.log("writeData", writeData);
+    console.log("writeIsPending", writeIsPending);
+    const res = await writeAsync();
+    console.log("writeData", writeData);
+    console.log("writeIsPending", writeIsPending);
+    console.log("writeIsSuccess", writeIsSuccess);
+    console.log("writeError", writeError);
+    console.log("writeStatus", writeStatus);
+  
   }
 
   // Add new contract read for affiliates
@@ -32,10 +43,27 @@ export default function Page() {
     refetchInterval: 1000
   });
 
+  const { address: userAddress } = useAccount();
+
+  const { contract: avatarContract } = useContract({
+    abi: avatarAbi,
+    address: avatarAddress,
+  });
+
   // Convert selected affiliate to shortString
   const selectedAffiliateString = affiliatesData && selectedAffiliate !== null 
     ? shortString.decodeShortString(affiliatesData[selectedAffiliate].toString())
     : "";
+
+  const calls = useMemo(() => {
+    if (!userAddress || !avatarContract) return [];
+    const accessories = selectedItems.map((itemId) => ({
+      affiliate_id: selectedAffiliateString,
+      accessory_id: itemId,
+      is_on: true // TODO: unselected items should be false
+    }));
+    return [avatarContract.populate("update_accessories", [accessories])];
+  }, [avatarContract, userAddress, selectedItems, selectedAffiliate]);
 
   // Modified contract read to use selected affiliate
   const { data: readData, refetch: dataRefetch, isError: readIsError, isLoading: readIsLoading, error: readError } = useReadContract({
@@ -46,6 +74,17 @@ export default function Page() {
     watch: true,
     refetchInterval: 1000,
     enabled: selectedAffiliate !== null // Only run query when an affiliate is selected
+  });
+
+  const {
+    send: writeAsync,
+    data: writeData,
+    isPending: writeIsPending,
+    error: writeError,
+    status: writeStatus,
+    isSuccess: writeIsSuccess,
+  } = useSendTransaction({
+    calls,
   });
 
   // Add affiliate selection handler
@@ -64,6 +103,11 @@ export default function Page() {
 
   return (
     <div className="flex w-full min-h-full mt-[125px] mb-[125px] justify-center items-center">
+      {/* Add CustomConnectButton with higher z-index */}
+      <div className="absolute top-4 right-4 z-50">
+        <CustomConnectButton />
+      </div>
+
       <div className="flex flex-col justify-start items-center gap-6 w-full overflow-y-auto mt-[-120px]">
         {/* Affiliates Grid */}
         <h2 className="text-xl font-bold">Select Affiliate</h2>
@@ -104,13 +148,13 @@ export default function Page() {
 
         {/* Submit button */}
         <button
-        //   onClick={() => updateSelectedItems()}
           onClick={() => updateSelectedItems()}
           disabled={selectedItems.length === 0}
           className="btn btn-primary px-8 py-2 disabled:opacity-50"
         >
           Update Selected Items ({selectedItems.length})
         </button>
+        Success: {writeIsSuccess ? "true" : "false"}
       </div>
     </div>
   );
