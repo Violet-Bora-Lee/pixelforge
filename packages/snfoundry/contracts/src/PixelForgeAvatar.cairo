@@ -15,6 +15,8 @@ pub trait IPixelForgeAvatar<TContractState> {
     fn register_affiliate(ref self: TContractState, affiliate_id: felt252, contract_address: ContractAddress);
     fn register_accessory(ref self: TContractState, affiliate_id: felt252, accessory_id: felt252);
     fn has_accessory(self: @TContractState, token_id: u256, affiliate_id: felt252, accessory_id: felt252) -> bool;
+    fn get_accessories_for_affiliate(self: @TContractState, affiliate_id: felt252) -> Span<felt252>;
+    fn get_affiliates(self: @TContractState) -> Span<felt252>;
     // ERC721 overrides
     fn name(self: @TContractState) -> ByteArray;
     fn symbol(self: @TContractState) -> ByteArray;
@@ -136,6 +138,23 @@ mod PixelForgeAvatar {
         }
         fn has_accessory(self: @ContractState, token_id: u256, affiliate_id: felt252, accessory_id: felt252) -> bool {
             self.item_accessories.entry(token_id).entry(affiliate_id).entry(accessory_id).read()
+        }
+        fn get_accessories_for_affiliate(self: @ContractState, affiliate_id: felt252) -> Span<felt252> {
+            let mut accessories_arr = array![];
+            let registered_accessories = self.all_accessories_list.entry(affiliate_id);
+            let len = registered_accessories.len();
+            for i in 0..len {
+                accessories_arr.append(registered_accessories.at(i).read());
+            };
+            accessories_arr.span()
+        }
+        fn get_affiliates(self: @ContractState) -> Span<felt252> {
+            let mut affiliates_arr = array![];
+            let len = self.all_affiliates_list.len();
+            for i in 0..len {
+                affiliates_arr.append(self.all_affiliates_list.at(i).read());
+            };
+            affiliates_arr.span()
         }
         fn token_uri(self: @ContractState, token_id: u256) -> ByteArray {
             // Check if token exists (done by ERC721)

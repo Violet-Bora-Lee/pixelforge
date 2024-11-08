@@ -4,7 +4,7 @@ import { RpcProvider, Account, Contract } from 'starknet'
 import deployedContracts from '~~/contracts/deployedContracts';
 
 // TODO get chain from somewhere
-const {address: wardrobeKeyAddress, abi: wardrobeKeyAbi} = deployedContracts.devnet.WardrobeKey;
+const {address: wardrobeKeyAddress, abi: wardrobeKeyAbi} = deployedContracts.devnet.WardrobeKeyBoredApes;
 
 // TODO get from config (/packages/nextjs/utils/devnetAccounts.ts)
 const rpcUrl = process.env.NEXT_PUBLIC_PROVIDER_URL || "http://localhost:5050"

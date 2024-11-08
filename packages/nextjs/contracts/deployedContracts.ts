@@ -7,7 +7,7 @@ const deployedContracts = {
   devnet: {
     WardrobeKeyBoredApes: {
       address:
-        "0x142457130ebb42e0b056a274ee60a2e9b2e94739165e53dbe94a82aaf231b4d",
+        "0x2689bff5ce4019fd20128efa216543417bcf9a92331d0c22a57f2496fccbbcb",
       abi: [
         {
           type: "impl",
@@ -669,7 +669,7 @@ const deployedContracts = {
     },
     WardrobeKeyOxford: {
       address:
-        "0x90f12dd3e1151a3305cf988d59167ccf4a656cbcd6e97d9e3868886ca74572",
+        "0x1a38357107f6bc7dd0e0c4329d982eaf2e072c1bb9d11e63f564060ecdba09c",
       abi: [
         {
           type: "impl",
@@ -1331,7 +1331,7 @@ const deployedContracts = {
     },
     PixelForgeAvatar: {
       address:
-        "0x56ba546ae39cb4cbab59dd8a63037922ad443f018b2594a7ac83b1ae702e4b9",
+        "0x40bb5600960c123cbf321111b02b4f8ff141f418e75de027fd72687d577e120",
       abi: [
         {
           type: "impl",
@@ -1391,6 +1391,16 @@ const deployedContracts = {
             {
               name: "high",
               type: "core::integer::u128",
+            },
+          ],
+        },
+        {
+          type: "struct",
+          name: "core::array::Span::<core::felt252>",
+          members: [
+            {
+              name: "snapshot",
+              type: "@core::array::Array::<core::felt252>",
             },
           ],
         },
@@ -1493,6 +1503,33 @@ const deployedContracts = {
             },
             {
               type: "function",
+              name: "get_accessories_for_affiliate",
+              inputs: [
+                {
+                  name: "affiliate_id",
+                  type: "core::felt252",
+                },
+              ],
+              outputs: [
+                {
+                  type: "core::array::Span::<core::felt252>",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
+              name: "get_affiliates",
+              inputs: [],
+              outputs: [
+                {
+                  type: "core::array::Span::<core::felt252>",
+                },
+              ],
+              state_mutability: "view",
+            },
+            {
+              type: "function",
               name: "name",
               inputs: [],
               outputs: [
@@ -1535,16 +1572,6 @@ const deployedContracts = {
           type: "impl",
           name: "ERC721Impl",
           interface_name: "openzeppelin_token::erc721::interface::IERC721",
-        },
-        {
-          type: "struct",
-          name: "core::array::Span::<core::felt252>",
-          members: [
-            {
-              name: "snapshot",
-              type: "@core::array::Array::<core::felt252>",
-            },
-          ],
         },
         {
           type: "interface",
@@ -1920,7 +1947,7 @@ const deployedContracts = {
         },
       ],
       classHash:
-        "0x785c4141197d3fe4df4eb14f8778697892a8779f70db4a1ad57248a04da5925",
+        "0x5805f4e39af9e76954abfdf9b9159e547fccaad895856eb55a9d18b3dc8949c",
     },
   },
 } as const;

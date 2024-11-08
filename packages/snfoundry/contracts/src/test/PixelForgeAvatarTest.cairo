@@ -259,3 +259,70 @@ fn test_cant_equip_unregistered_affiliate() {
     let mut accessories = array![accessory];
     avatar.update_accessories(accessories.span());
 }
+
+#[test]
+fn test_get_accessories_for_affiliate() {
+    let avatar_address = deploy_avatar();
+    let avatar = IPixelForgeAvatarDispatcher { contract_address: avatar_address };
+    
+    // Register affiliate and accessories as OWNER
+    start_cheat_caller_address(avatar_address, OWNER());
+    
+    let affiliate_id: felt252 = 'test_affiliate';
+    let key_address = deploy_wardrobe_key();
+    avatar.register_affiliate(affiliate_id, key_address);
+    
+    // Register multiple accessories
+    let accessory1: felt252 = 'hat';
+    let accessory2: felt252 = 'glasses';
+    let accessory3: felt252 = 'shirt';
+    
+    avatar.register_accessory(affiliate_id, accessory1);
+    avatar.register_accessory(affiliate_id, accessory2);
+    avatar.register_accessory(affiliate_id, accessory3);
+    
+    // Get registered accessories
+    let accessories = avatar.get_accessories_for_affiliate(affiliate_id);
+    
+    // Verify accessories list
+    assert(*accessories.at(0) == accessory1, 'Wrong first accessory');
+    assert(*accessories.at(1) == accessory2, 'Wrong second accessory');
+    assert(*accessories.at(2) == accessory3, 'Wrong third accessory');
+    assert(accessories.len() == 3, 'Wrong number of accessories');
+    
+    stop_cheat_caller_address(avatar_address);
+}
+
+#[test]
+fn test_get_affiliates() {
+    let avatar_address = deploy_avatar();
+    let avatar = IPixelForgeAvatarDispatcher { contract_address: avatar_address };
+    
+    // Register multiple affiliates as OWNER
+    start_cheat_caller_address(avatar_address, OWNER());
+    
+    // Create multiple wardrobe key contracts
+    let key1_address = deploy_wardrobe_key();
+    let key2_address = deploy_wardrobe_key();
+    let key3_address = deploy_wardrobe_key();
+    
+    // Register affiliates
+    let affiliate1: felt252 = 'bored_apes';
+    let affiliate2: felt252 = 'oxford';
+    let affiliate3: felt252 = 'punk_wear';
+    
+    avatar.register_affiliate(affiliate1, key1_address);
+    avatar.register_affiliate(affiliate2, key2_address);
+    avatar.register_affiliate(affiliate3, key3_address);
+    
+    // Get registered affiliates
+    let affiliates = avatar.get_affiliates();
+    
+    // Verify affiliates list
+    assert(*affiliates.at(0) == affiliate1, 'Wrong first affiliate');
+    assert(*affiliates.at(1) == affiliate2, 'Wrong second affiliate');
+    assert(*affiliates.at(2) == affiliate3, 'Wrong third affiliate');
+    assert(affiliates.len() == 3, 'Wrong number of affiliates');
+    
+    stop_cheat_caller_address(avatar_address);
+}
