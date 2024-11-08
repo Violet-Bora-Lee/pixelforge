@@ -6,11 +6,11 @@ import Image from "next/image";
 
 export default function Page() {
   const [images, setImages] = useState([
-    { id: "image-1", src: "/demo/1.png" },
-    { id: "image-2", src: "/demo/2.png" },
-    { id: "image-3", src: "/demo/3.png" },
-    { id: "image-4", src: "/demo/4.png" },
-    { id: "image-5", src: "/demo/5.png" },
+    { id: "image-1", src: "/demo/keys/1.png" },
+    { id: "image-2", src: "/demo/keys/2.png" },
+    { id: "image-3", src: "/demo/keys/3.png" },
+    { id: "image-4", src: "/demo/keys/4.png" },
+    { id: "image-5", src: "/demo/keys/5.png" },
   ]);
 
   const handleDragEnd = (result: any) => {
@@ -25,12 +25,12 @@ export default function Page() {
 
   return (
     <div className="flex flex-col w-full min-h-full mt-[125px] mb-[125px] justify-center items-center relative">
-      <div className="w-4/5 items-center">
+      <div className="w-[330px] items-center">
         <Image
           className="flex w-full items-center"
           alt="key hanger image"
           src="/demo/key-hanger.png"
-          width={350}
+          width={360}
           height={50}
         />
       </div>
@@ -42,7 +42,7 @@ export default function Page() {
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="flex gap-4"
+                  className="flex gap-0"
                 >
                   {images.map((image, index) => (
                     <Draggable
