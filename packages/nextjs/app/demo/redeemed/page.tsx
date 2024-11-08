@@ -11,7 +11,7 @@ export default function Page() {
             <Image
               width={250}
               height={250}
-              src="/redeemed-key.png"
+              src="/demo/redeemed-key.png"
               alt="Square"
               className="w-full h-full object-cover"
             />

@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="fixed bottom-[80px] right-6">
             <Image
               alt="pixel forge logo"
-              src="/pixel-forge-logo.png"
+              src="/demo/pixel-forge-logo.png"
               width={150}
               height={332}
               priority
