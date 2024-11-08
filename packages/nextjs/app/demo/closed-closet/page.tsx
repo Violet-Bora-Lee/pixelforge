@@ -47,27 +47,26 @@ export default function Page() {
   }, [showSuccess, router]);
 
   return (
-    <div className="flex flex-col w-full min-h-full mt-[125px] mb-[125px] justify-center items-center relative">
-      <div className="flex flex-col justify-start items-center gap-2 w-full overflow-y-auto mt-[-10px]">
-        <div className="relative w-full h-96 p-4">
+    <div className="flex flex-col w-full min-h-full mb-[125px] justify-center items-center relative">
+      <div className="flex flex-col justify-start items-center gap-2 w-full overflow-y-auto">
+        <div className="relative w-full h-96 px-6">
           <div className="flex justify-between items-center h-full">
             <Draggable onDrag={handleDrag} onStop={handleStop}>
               <div
                 ref={dragRef}
-                className={`cursor-move w-32 h-32 bg-blue-500 rounded-lg flex items-center justify-center text-white
-              ${isDragging ? "opacity-75" : "opacity-100"}`}
+                className={`cursor-move ${isDragging ? "opacity-75" : "opacity-100"}`}
               >
                 <img
-                  src="/api/placeholder/128/128"
+                  src="/demo/keys/bayc-horizontal.png"
                   alt="Draggable Item"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-[130px] object-cover rounded-lg z-10"
                 />
               </div>
             </Draggable>
 
             <div
               ref={dropZoneRef}
-              className={`w-1/2 h-fit flex items-center justify-center 
+              className={`w-2/5 h-fit flex items-center justify-center 
             ${isOverDropZone ? "transform scale-x-105" : "transform scale-100"}`}
             >
               <img
