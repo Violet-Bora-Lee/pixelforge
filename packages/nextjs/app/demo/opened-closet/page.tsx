@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Draggable from "react-draggable";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   return (
