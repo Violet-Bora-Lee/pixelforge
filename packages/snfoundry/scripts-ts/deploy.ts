@@ -42,13 +42,34 @@ import { green } from "./helpers/colorize-log";
  * @returns {Promise<void>}
  */
 const deployScript = async (): Promise<void> => {
-  await deployContract({
+  // Deploy bored apes key
+  const { address: boredApeKeyAddress } = await deployContract({
     contract: "WardrobeKey",
     constructorArgs: {
       owner: deployer.address,
-      base_uri: "https://pixelforge.io/wardrobe-key/", // TODO: change this to the actual base uri
+      base_uri: "https://pixelforge.io/bored-apes-key/", // TODO: change this to the actual base uri
+    },
+    contractName: "WardrobeKeyBoredApes",
+  });
+  // Deploy Oxford key
+  const { address: oxfordKeyAddress } = await deployContract({
+    contract: "WardrobeKey",
+    contractName: "WardrobeKeyOxford",
+    constructorArgs: {
+      owner: deployer.address,
+      base_uri: "https://pixelforge.io/oxford-key/",
     },
   });
+  // Deploy PixelForgeAvatar
+  const { address: avatarAddress } = await deployContract({
+    contract: "PixelForgeAvatar",
+    constructorArgs: {
+      owner: deployer.address,
+      base_uri: "https://pixelforge.io/avatar/",
+    },
+  });
+  // Register affiliates
+  // TODO (need to do it manually now)
 };
 
 deployScript()
