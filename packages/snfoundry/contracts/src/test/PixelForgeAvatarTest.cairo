@@ -131,6 +131,20 @@ fn test_cant_transfer_avatar() {
 }
 
 #[test]
+#[should_panic(expected: ('Caller already has a token',))]
+fn test_cant_mint_twice() {
+    let avatar_address = deploy_avatar();
+    let avatar = IPixelForgeAvatarDispatcher { contract_address: avatar_address };
+
+    // USER mints avatar
+    start_cheat_caller_address(avatar_address, USER());
+    avatar.mint();
+
+    // USER mints avatar again
+    avatar.mint();
+}
+
+#[test]
 fn test_token_uri_generation() {
     let avatar_address = deploy_avatar();
     let key1_address = deploy_wardrobe_key();

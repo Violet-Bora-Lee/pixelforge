@@ -58,7 +58,8 @@ mod WardrobeKey {
     #[abi(embed_v0)]
     impl WardrobeKeyImpl of IWardrobeKey<ContractState> {
         fn mint(ref self: ContractState, to: ContractAddress) {
-            self.ownable.assert_only_owner();
+            // TODO: enable this check once we have Metamask integration
+            // self.ownable.assert_only_owner();
             let new_token_id = self.last_token_id.read() + 1;
             self.last_token_id.write(new_token_id);
             self.erc721.mint(to, new_token_id);

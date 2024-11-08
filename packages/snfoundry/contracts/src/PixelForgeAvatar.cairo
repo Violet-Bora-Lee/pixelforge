@@ -88,9 +88,11 @@ mod PixelForgeAvatar {
     impl PixelForgeAvatarImpl of IPixelForgeAvatar<ContractState> {
         fn mint(ref self: ContractState) {
             let caller = get_caller_address();
+            // check if the caller already has a token
+            let balance = self.erc721.balance_of(caller);
+            assert(balance == 0, 'Caller already has a token');
 
             // mint a new token (the token id is the caller's address)
-            // mint will check if the token is already minted, and if so, reject
             let caller_as_felt: felt252 = caller.into();
             self.erc721.mint(caller, caller_as_felt.into());
         }

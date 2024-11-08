@@ -24,7 +24,7 @@ export default function Page() {
     console.log("readData", readData);
     console.log("writeData", writeData);
     console.log("writeIsPending", writeIsPending);
-    const res = await writeAsync();
+    const res = writeAsync();
     console.log("writeData", writeData);
     console.log("writeIsPending", writeIsPending);
     console.log("writeIsSuccess", writeIsSuccess);
