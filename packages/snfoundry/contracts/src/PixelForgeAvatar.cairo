@@ -80,7 +80,7 @@ mod PixelForgeAvatar {
 
     #[constructor]
     fn constructor(ref self: ContractState, owner: ContractAddress, base_uri: ByteArray) {
-        self.erc721.initializer("PixelForge Wardrobe Key", "PFWK", base_uri);
+        self.erc721.initializer("PixelForgeAvatar", "PFAV", base_uri);
         self.ownable.initializer(owner);
     }
 

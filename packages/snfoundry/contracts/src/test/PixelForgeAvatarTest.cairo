@@ -42,8 +42,8 @@ fn test_deployment() {
     let contract_address = deploy_avatar();
     let dispatcher = ERC721ABIDispatcher { contract_address };
     
-    assert(dispatcher.name() == "PixelForge Wardrobe Key", 'Wrong name');
-    assert(dispatcher.symbol() == "PFWK", 'Wrong symbol');
+    assert(dispatcher.name() == "PixelForgeAvatar", 'Wrong name');
+    assert(dispatcher.symbol() == "PFAV", 'Wrong symbol');
 }
 
 #[test]
