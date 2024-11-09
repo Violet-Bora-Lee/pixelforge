@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation';
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
 
+import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
+import { devnet, sepolia, mainnet } from "@starknet-react/chains";
+
 import { useDeployedContractInfo } from '~~/hooks/scaffold-stark';
 import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWriteContract';
@@ -17,16 +20,16 @@ export default function Page() {
 
   const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
 
+  const { targetNetwork } = useTargetNetwork();
 
-  // // NOTE: workaround - check by name also since in starknet react devnet and sepolia has the same chainId
-  // const isLocalNetwork =
-  //   targetNetwork.id === devnet.id && targetNetwork.network === devnet.network;
-  // const isSepoliaNetwork =
-  //   targetNetwork.id === sepolia.id &&
-  //   targetNetwork.network === sepolia.network;
-  // const isMainnetNetwork =
-  //   targetNetwork.id === mainnet.id &&
-  //   targetNetwork.network === mainnet.network;
+  const isLocalNetwork =
+    targetNetwork.id === devnet.id && targetNetwork.network === devnet.network;
+  const isSepoliaNetwork =
+    targetNetwork.id === sepolia.id &&
+    targetNetwork.network === sepolia.network;
+  const isMainnetNetwork =
+    targetNetwork.id === mainnet.id &&
+    targetNetwork.network === mainnet.network;
 
 
   const { data: deployedContractData } = useDeployedContractInfo("WardrobeKeyBoredApes");
@@ -51,10 +54,19 @@ export default function Page() {
     };
 
   useEffect(() => {
+    if (isSepoliaNetwork) {
+      console.log("Currently on Sepolia Network");
+    }
+
+    if (isLocalNetwork) {
+      console.log("Currently on Local Network");
+    }
+
     console.log("connected account info: ", connectedAccountInfo);
     console.log("connected address: ", connectedAddress);
     console.log("status: ", status);
-  }, [connectedAddress]);
+
+  }, [connectedAddress, isSepoliaNetwork]);
 
   const sendMagicLink = async () => {
     console.log("send magic link");
