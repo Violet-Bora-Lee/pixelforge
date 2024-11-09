@@ -25,26 +25,28 @@ export default function Page() {
   const [hasHat, setHasHat] = React.useState(false);
   const [showHatInCabinet, setShowHatInCabinet] = React.useState(true);
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const handleUpdateAccessory = async (destinationId: string) => {
     try {
+      setIsLoading(true);
       if (destinationId === 'character') {
-        // 모자를 착용하는 경우
-        const result = await updateAccessory(); // updateAccessory 함수 호출
-        if (result) { // 성공적으로 업데이트된 경우
+        const result = await updateAccessory();
+        if (result) {
           setHasHat(true);
           setShowHatInCabinet(false);
         }
       } else {
-        // 모자를 벗는 경우
-        const result = await updateAccessory(); // updateAccessory 함수 호출
-        if (result) { // 성공적으로 업데이트된 경우
+        const result = await updateAccessory();
+        if (result) {
           setHasHat(false);
           setShowHatInCabinet(true);
         }
       }
     } catch (error) {
       console.error('Failed to update accessory:', error);
-      // 에러 처리 - 필요한 경우 사용자에게 알림
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,7 +119,7 @@ export default function Page() {
                   />
                   
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-                    {showHatInCabinet && (
+                    {showHatInCabinet && !isLoading && (
                       <Draggable draggableId="hat" index={0}>
                         {(provided) => (
                           <div
@@ -161,6 +163,15 @@ export default function Page() {
                     alt="Avatar"
                     className="w-full h-full object-contain"
                   />
+                  {isLoading && (
+                    <div className="absolute top-0 left-0 right-0 flex justify-center">
+                      <img
+                        src="/demo/bayc-hat.png"
+                        alt="Loading Hat"
+                        className="w-20 h-auto animate-spin"
+                      />
+                    </div>
+                  )}
                 </div>
                 {provided.placeholder}
               </div>
