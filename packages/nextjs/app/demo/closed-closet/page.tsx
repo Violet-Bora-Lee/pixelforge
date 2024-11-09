@@ -13,6 +13,7 @@ export default function Page() {
   const dragRef = useRef(null);
   const dropZoneRef = useRef(null);
 
+  // @ts-ignore
   const checkCollision = (dragElement, dropElement) => {
     if (!dragElement || !dropElement) return false;
     const drag = dragElement.getBoundingClientRect();

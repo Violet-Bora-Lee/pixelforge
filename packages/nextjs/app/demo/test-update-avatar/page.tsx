@@ -36,7 +36,6 @@ export default function Page() {
   // Add new contract read for affiliates
   const { data: affiliatesData } = useReadContract({
     functionName: "get_affiliates",
-    args: [],
     abi: avatarAbi as Abi,
     address: avatarAddress,
     watch: true,
@@ -52,6 +51,7 @@ export default function Page() {
 
   // Convert selected affiliate to shortString
   const selectedAffiliateString = affiliatesData && selectedAffiliate !== null 
+    // @ts-ignore
     ? shortString.decodeShortString(affiliatesData[selectedAffiliate].toString())
     : "";
 
@@ -68,6 +68,7 @@ export default function Page() {
   // Modified contract read to use selected affiliate
   const { data: readData, refetch: dataRefetch, isError: readIsError, isLoading: readIsLoading, error: readError } = useReadContract({
     functionName: "get_accessories_for_affiliate",
+    // @ts-ignore
     args: [selectedAffiliateString],
     abi: avatarAbi as Abi,
     address: avatarAddress,
@@ -112,6 +113,7 @@ export default function Page() {
         {/* Affiliates Grid */}
         <h2 className="text-xl font-bold">Select Affiliate</h2>
         <div className="grid grid-cols-3 gap-4 p-4 w-full max-w-2xl">
+          {/* @ts-ignore */}
           {affiliatesData?.map((item: any, index: number) => (
             <div
               key={index}
@@ -131,6 +133,7 @@ export default function Page() {
         <h2 className="text-xl font-bold">Select Accessories</h2>
         {/* Grid of items */}
         <div className="grid grid-cols-3 gap-4 p-4 w-full max-w-2xl">
+          {/* @ts-ignore */}
           {readData?.map((item: any, index: number) => (
             <div
               key={index}
