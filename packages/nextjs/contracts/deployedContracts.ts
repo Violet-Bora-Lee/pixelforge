@@ -2136,7 +2136,7 @@ const deployedContracts = {
   sepolia: {
     WardrobeKeyBoredApes: {
       address:
-        "0x2a64b90bfc0a82f41603bc2e342396bbb0399c57f7275692b22c0ad6084108b",
+        "0x6e62597257ef1c44c9fe19e7671b03efb9b7aaa469a5e1f26e89ab464298c5d",
       abi: [
         {
           type: "impl",
@@ -2798,7 +2798,7 @@ const deployedContracts = {
     },
     WardrobeKeyOxford: {
       address:
-        "0x5d8ef5f78dd38bfd4873a7a827f2451d32c3824a4125ed97e424eed8769c0c5",
+        "0x7bfcbcae3fa50f2ff147f3ef6e48a13b3022443399d726a39cc8c34eb815533",
       abi: [
         {
           type: "impl",
@@ -3460,7 +3460,7 @@ const deployedContracts = {
     },
     PixelForgeAvatar: {
       address:
-        "0x60fa1243ecde8a37309e7bcb81e12b06dad6e7a7f634515803f4c9243615f25",
+        "0xdef18245afc84dae104086fcf9cf581cfc543036959b3013b1f9987e881c47",
       abi: [
         {
           type: "impl",
