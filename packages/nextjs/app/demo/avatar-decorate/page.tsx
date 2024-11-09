@@ -4,11 +4,19 @@ import React from "react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 export default function Page() {
+  const [hasHat, setHasHat] = React.useState(false);
+  const [showHatInCabinet, setShowHatInCabinet] = React.useState(true);
+
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
     
-    console.log('Dragged from:', result.source);
-    console.log('Dropped on:', result.destination);
+    if (result.destination.droppableId === 'character') {
+      setHasHat(true);
+      setShowHatInCabinet(false);
+    } else {
+      setHasHat(false);
+      setShowHatInCabinet(true);
+    }
   };
 
   return (
@@ -31,29 +39,32 @@ export default function Page() {
                   />
                   
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-1">
-                    <Draggable draggableId="hat" index={0}>
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          <img
-                            src="/demo/bayc-hat.png"
-                            alt="BAYC Cap"
-                            className="w-20 h-auto cursor-move"
-                          />
-                        </div>
-                      )}
-                    </Draggable>
+                    {showHatInCabinet && (
+                      <Draggable draggableId="hat" index={0}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            className="flex items-center justify-center h-20"
+                          >
+                            <img
+                              src="/demo/bayc-hat.png"
+                              alt="BAYC Cap"
+                              className="w-20 h-auto cursor-move"
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    )}
                     <img
                       src="/demo/bayc-t-shirt.png"
                       alt="BAYC T-shirt"
                       className="w-36 h-auto"
                     />
                   </div>
+                  <div style={{ display: 'none' }}>{provided.placeholder}</div>
                 </div>
-                {provided.placeholder}
               </div>
             )}
           </Droppable>
@@ -68,7 +79,7 @@ export default function Page() {
               >
                 <div className={`relative w-full h-full ${snapshot.isDraggingOver ? 'bg-blue-100' : ''}`}>
                   <img
-                    src="/demo/avatar.png"
+                    src={hasHat ? "/demo/avatar-with-hat.png" : "/demo/avatar-no-hat.png"}
                     alt="Avatar"
                     className="w-full h-full object-contain"
                   />
