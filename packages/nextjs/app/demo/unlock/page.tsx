@@ -15,7 +15,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const { account: connectedAddress, address, status } = useAccount();
+  const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
 
 
   // // NOTE: workaround - check by name also since in starknet react devnet and sepolia has the same chainId
@@ -34,7 +34,7 @@ export default function Page() {
   const { sendAsync: mintNewKey } = useScaffoldWriteContract({
     contractName: "WardrobeKeyBoredApes",
     functionName: "mint" as const,
-    args: [deployedContractData?.address]
+    args: [connectedAddress]
   });
 
 
