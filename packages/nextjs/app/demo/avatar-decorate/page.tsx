@@ -6,7 +6,6 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
 
-import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWriteContract';
 import { shortString } from "starknet";
 
@@ -60,16 +59,16 @@ export default function Page() {
     functionName: "update_accessories" as const,
     // TODO: pass felt252 type affiliate_id, felt252 type accessory_id, bool type is_on with real values
     args: [[
-      // {
-      //   affiliate_id: shortString.encodeShortString("bored_apes"), // "bored_apes" encoded as felt252
-      //   accessory_id: shortString.encodeShortString("hat"),        // "hat" encoded as felt252
-      //   is_on: true
-      // },
       {
         affiliate_id: shortString.encodeShortString("bored_apes"), // "bored_apes" encoded as felt252
-        accessory_id: shortString.encodeShortString("t-shirt"),    // "t-shirt" encoded as felt252
+        accessory_id: shortString.encodeShortString("hat"),        // "hat" encoded as felt252
         is_on: true
-      }
+      },
+      // {
+      //   affiliate_id: shortString.encodeShortString("bored_apes"), // "bored_apes" encoded as felt252
+      //   accessory_id: shortString.encodeShortString("t-shirt"),    // "t-shirt" encoded as felt252
+      //   is_on: true
+      // }
     ]]
   });
 
