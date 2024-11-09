@@ -16,7 +16,7 @@ const useScaffoldEthBalance = ({ address }: UseScaffoldEthBalanceProps) => {
     functionName: "balance_of",
     address: deployedContract?.address,
     abi: deployedContract?.abi as Abi as any[],
-    watch: true,
+    // watch: true,
     enabled: true,
     args: address ? [address] : [],
     blockIdentifier: "pending" as BlockNumber,
