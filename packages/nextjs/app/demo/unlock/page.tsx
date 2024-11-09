@@ -51,8 +51,8 @@ export default function Page() {
     };
 
   useEffect(() => {
-    console.log("account: ", connectedAddress);
-    console.log("address: ", address);
+    console.log("connected account info: ", connectedAccountInfo);
+    console.log("connected address: ", connectedAddress);
     console.log("status: ", status);
   }, [connectedAddress]);
 

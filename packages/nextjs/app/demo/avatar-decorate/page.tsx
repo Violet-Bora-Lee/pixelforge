@@ -13,11 +13,12 @@ import { shortString } from "starknet";
 
 export default function Page() {
   useAutoConnect();
+
   const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
 
   useEffect(() => {
-    console.log("account info: ", connectedAccountInfo);
-    console.log("address: ", connectedAddress);
+    console.log("connected account info: ", connectedAccountInfo);
+    console.log("connected address: ", connectedAddress);
     console.log("status: ", status);
   }, [connectedAddress]);
 
