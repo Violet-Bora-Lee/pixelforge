@@ -22,10 +22,10 @@ export default function Page() {
     console.log("status: ", status);
   }, [connectedAddress]);
 
-  const [hasHat, setHasHat] = React.useState(false);
-  const [showHatInCabinet, setShowHatInCabinet] = React.useState(true);
+  const [hasHat, setHasHat] = useState(false);
+  const [showHatInCabinet, setShowHatInCabinet] =useState(true);
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateAccessory = async (destinationId: string) => {
     try {
@@ -56,24 +56,6 @@ export default function Page() {
     handleUpdateAccessory(result.destination.droppableId);
   };
 
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const [selectedAffiliate, setSelectedAffiliate] = useState<number | null>(null);
-
-  const { data: pixelForgeAvatarContractData } = useDeployedContractInfo("PixelForgeAvatar");
-
-  
-  const { sendAsync: getAffiliateContractData } = useScaffoldReadContract({
-    contractName: "PixelForgeAvatar",
-    functionName: "get_affiliates" as const,
-    args: [] // no args
-  });
-
-  // const {data: affiliatesData} = getAffiliateContractData();
-
-  // const selectedAffiliateString = affiliatesData && selectedAffiliate !== null 
-  //   // @ts-ignore
-  //   ? shortString.decodeShortString(affiliatesData[selectedAffiliate].toString())
-  //   : "";
 
   const { sendAsync: readAccessory } = useScaffoldReadContract({
     contractName: "PixelForgeAvatar",
