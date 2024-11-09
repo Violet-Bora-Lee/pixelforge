@@ -11,8 +11,9 @@ import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWri
 export default function Page() {
   useAutoConnect();
 
-  const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
+  const { address, status } = useAccount();
   const searchParams = useSearchParams();
+
   const token = searchParams.get('token'); // Extract token from query params
 
   console.log("token: ", token);
@@ -20,8 +21,8 @@ export default function Page() {
   const { sendAsync: mintNewkeyWithBaycNft } = useScaffoldWriteContract({
     contractName: "WardrobeKeyBoredApes",
     functionName: "mint" as const,
-    // args: [connectedAddress, token], // Pass token as an argument
-    args: [connectedAddress], // TODO
+    // args: [address, token], // Pass token as an argument
+    args: [address], // TODO
   });
 
   const wrapInTryCatch =
@@ -43,10 +44,9 @@ export default function Page() {
   };
 
   useEffect(() => {
-    console.log("connected account info: ", connectedAccountInfo);
-    console.log("connected address: ", connectedAddress);
+    console.log("connected address: ", address);
     console.log("status: ", status);
-  }, [connectedAddress]);
+  }, [address]);
 
   const handleClick = () => {
     wrapInTryCatch(

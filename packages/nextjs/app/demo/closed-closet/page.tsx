@@ -5,7 +5,19 @@ import Draggable from "react-draggable";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { useAutoConnect } from "~~/hooks/scaffold-stark";
+import { useAccount } from "~~/hooks/useAccount";
+
 export default function Page() {
+  useAutoConnect();
+
+  const { address, status } = useAccount();
+
+  useEffect(() => {
+    console.log("connected address: ", address);
+    console.log("status: ", status);
+  }, [address]);
+
   const router = useRouter();
   const [isDragging, setIsDragging] = useState(false);
   const [isOverDropZone, setIsOverDropZone] = useState(false);

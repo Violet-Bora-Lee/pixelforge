@@ -1,15 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import { useAutoConnect } from "~~/hooks/scaffold-stark";
+import { useAccount } from "~~/hooks/useAccount";
+
 export default function Page() {
+  useAutoConnect();
+
+  const { address, status } = useAccount();
+
   const router = useRouter();
   
   const handleUnlockClick = () => {
     router.push('/demo/unlock');
   };
+
+  useEffect(() => {
+    console.log("connected address: ", address);
+    console.log("status: ", status);
+  }, [address]);
 
   return (
     <div className="flex w-full min-h-full mt-[30px] mb-[125px] justify-center items-center">

@@ -5,7 +5,19 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { useAutoConnect } from "~~/hooks/scaffold-stark";
+import { useAccount } from "~~/hooks/useAccount";
+
 export default function Page() {
+  useAutoConnect();
+
+  const { address, status } = useAccount();
+
+  useEffect(() => {
+    console.log("connected address: ", address);
+    console.log("status: ", status);
+  }, [address]);
+
   const router = useRouter();
   const [isDraggingKey5, setIsDraggingKey5] = useState(false);
 
@@ -38,10 +50,8 @@ export default function Page() {
     const handleMouseMove = (e: MouseEvent) => {
       if (isDraggingKey5) {
         const windowWidth = window.innerWidth;
-        console.log('Mouse position:', e.clientX, 'Window width:', windowWidth); // 디버깅용
 
         if (e.clientX > windowWidth * 0.9) {
-          console.log('Navigating...'); // 디버깅용
           setIsDraggingKey5(false);
           router.push("/demo/closed-closet");
         }

@@ -13,13 +13,17 @@ import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWri
 export default function Page() {
   useAutoConnect();
 
-  const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
+  const { address, status } = useAccount();
 
+  useEffect(() => {
+    console.log("connected address: ", address);
+    console.log("status: ", status);
+  }, [address]);
   
   const { sendAsync: mintNewkeyWithBaycNft } = useScaffoldWriteContract({
     contractName: "WardrobeKeyBoredApes",
     functionName: "mint" as const,
-    args: [connectedAddress],
+    args: [address],
   });
 
   const wrapInTryCatch =
@@ -40,12 +44,6 @@ export default function Page() {
   const goToKeyMintedPage = () => {
     router.push('/demo/redeemed-key');
   };
-
-  useEffect(() => {
-    console.log("connected account info: ", connectedAccountInfo);
-    console.log("connected address: ", connectedAddress);
-    console.log("status: ", status);
-  }, [connectedAddress]);
 
   const handleClick = () => {
     wrapInTryCatch(

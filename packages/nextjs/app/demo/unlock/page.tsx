@@ -14,11 +14,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const {
-    account: connectedAccountInfo,
-    address: connectedAddress,
-    status,
-  } = useAccount();
+  const { address, status } = useAccount();
 
   const { targetNetwork } = useTargetNetwork();
 
@@ -44,22 +40,9 @@ export default function Page() {
     };
 
   useEffect(() => {
-    if (isSepoliaNetwork) {
-      console.log("Currently on Sepolia Network");
-    }
-
-    if (isLocalNetwork) {
-      console.log("Currently on Local Network");
-    }
-
-    if (isMainnetNetwork) {
-      console.log("Currently on Mainnet Network");
-    }
-
-    console.log("connected account info: ", connectedAccountInfo);
-    console.log("connected address: ", connectedAddress);
+    console.log("connected address: ", address);
     console.log("status: ", status);
-  }, [connectedAddress, isSepoliaNetwork]);
+  }, [address]);
 
   const handleUnlockByNftButton = async () => {
     console.log("click 'unlock by nft' button");

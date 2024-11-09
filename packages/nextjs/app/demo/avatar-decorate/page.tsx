@@ -12,13 +12,12 @@ import { shortString } from "starknet";
 export default function Page() {
   useAutoConnect();
 
-  const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
+  const { address, status } = useAccount();
 
   useEffect(() => {
-    console.log("connected account info: ", connectedAccountInfo);
-    console.log("connected address: ", connectedAddress);
+    console.log("connected address: ", address);
     console.log("status: ", status);
-  }, [connectedAddress]);
+  }, [address]);
 
   const [hasHat, setHasHat] = useState(false);
   const [showHatInCabinet, setShowHatInCabinet] =useState(true);
