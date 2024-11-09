@@ -21,6 +21,7 @@ pub trait IPixelForgeAvatar<TContractState> {
     fn name(self: @TContractState) -> ByteArray;
     fn symbol(self: @TContractState) -> ByteArray;
     fn token_uri(self: @TContractState, token_id: u256) -> ByteArray;
+    fn tokenUri(self: @TContractState, token_id: u256) -> ByteArray;
 }
 
 #[starknet::contract]
@@ -40,9 +41,13 @@ mod PixelForgeAvatar {
     component!(path: SRC5Component, storage: src5, event: SRC5Event);
 
     #[abi(embed_v0)]
+    impl SRC5Impl = SRC5Component::SRC5Impl<ContractState>;
+
     // Don't embed entire ERC721 ABI because we need to override some methods
-    // impl ERC721MixinImpl = ERC721Component::ERC721MixinImpl<ContractState>;
+    #[abi(embed_v0)]
     impl ERC721Impl = ERC721Component::ERC721Impl<ContractState>;
+    #[abi(embed_v0)]
+    impl ERC721CamelOnlyImpl = ERC721Component::ERC721CamelOnlyImpl<ContractState>;
     impl ERC721MetadataImpl = ERC721Component::ERC721MetadataImpl<ContractState>;
     impl ERC721InternalImpl = ERC721Component::InternalImpl<ContractState>;
     
@@ -162,6 +167,15 @@ mod PixelForgeAvatar {
             affiliates_arr.span()
         }
         fn token_uri(self: @ContractState, token_id: u256) -> ByteArray {
+            self.tokenUri(token_id)
+        }
+        fn name(self: @ContractState) -> ByteArray {
+            self.erc721.name()
+        }
+        fn symbol(self: @ContractState) -> ByteArray {
+            self.erc721.symbol()
+        }
+        fn tokenUri(self: @ContractState, token_id: u256) -> ByteArray {
             // Check if token exists (done by ERC721)
             let _ = self.erc721.owner_of(token_id);
 
@@ -196,12 +210,6 @@ mod PixelForgeAvatar {
             };
 
             token_uri
-        }
-        fn name(self: @ContractState) -> ByteArray {
-            self.erc721.name()
-        }
-        fn symbol(self: @ContractState) -> ByteArray {
-            self.erc721.symbol()
         }
     }
 
