@@ -30,7 +30,7 @@ export default function Page() {
       <div className="flex flex-col justify-start items-center gap-2 w-full overflow-y-auto mt-[-10px]">
         <div className="relative w-full h-96 p-4">
           <div className="flex justify-between items-center h-full">
-            <div className="relative w-full max-w-2xl mx-auto h-full">
+            <div className="relative w-full max-w-2xl mx-auto h-full animate-fadeIn">
               {/* Empty Cabinet Background */}
               <img
                 src="/demo/opened-closet.png"

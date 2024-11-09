@@ -36,7 +36,7 @@ export default function Page() {
               height={250}
               src="/demo/minted-key-oxford.png"
               alt="Square"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover animate-fadeIn"
             />
           </div>
         </div>

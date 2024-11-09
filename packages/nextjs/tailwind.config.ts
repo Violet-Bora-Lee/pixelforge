@@ -219,8 +219,15 @@ module.exports = {
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'scale(0.9)' },
+          '100%': { opacity: '1', transform: 'scale(1)' }
+        }
+      },
       animation: {
         "pulse-fast": "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        fadeIn: 'fadeIn 0.5s ease-out forwards'
       },
       backgroundImage: {
         "gradient-light":
@@ -232,6 +239,7 @@ module.exports = {
         "gradient-icon":
           "var(--gradient, linear-gradient(90deg, #42D2F1 0%, #B248DD 100%))",
       },
+
     },
   },
 };
