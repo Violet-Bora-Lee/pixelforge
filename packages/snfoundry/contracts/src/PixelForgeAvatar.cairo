@@ -190,20 +190,20 @@ mod PixelForgeAvatar {
                 let accessories = self.all_accessories_list.entry(affiliate_id);
                 let mut aff_used = false;
                 for j in 0..accessories.len() {
-                    if !aff_used {
-                        if first_affiliate {
-                            token_uri = format!("{}?{}=", token_uri, affiliate_id);
-                            first_affiliate = false;
-                        } else {
-                            token_uri = format!("{}&{}=", token_uri, affiliate_id);
-                        }
-                        aff_used = true;
-                    } else {
-                        token_uri = format!("{},", token_uri);
-                    }
                     let accessory_id = accessories.at(j).read();
                     let is_on = self.item_accessories.entry(token_id).entry(affiliate_id).entry(accessory_id).read();
                     if is_on {
+                        if !aff_used {
+                            if first_affiliate {
+                                token_uri = format!("{}?{}=", token_uri, affiliate_id);
+                                first_affiliate = false;
+                            } else {
+                                token_uri = format!("{}&{}=", token_uri, affiliate_id);
+                            }
+                            aff_used = true;
+                        } else {
+                            token_uri = format!("{},", token_uri);
+                        }
                         token_uri = format!("{}{}", token_uri, accessory_id);
                     }
                 }

@@ -3,6 +3,7 @@ import { createCanvas, loadImage } from 'canvas';
 import path from 'path';
 import fs from 'fs';
 import { accessoriesConfig } from './accessories';
+import { shortString } from 'starknet';
 
 export async function GET(request: Request) {
   try {
@@ -24,8 +25,14 @@ export async function GET(request: Request) {
       ctx.drawImage(emptyImage, 0, 0, canvas.width, canvas.height);
     }
 
-    for (const [category, items] of Object.entries(affiliateAccessories)) {
-      for (const item of items) {
+    for (let [category, items] of Object.entries(affiliateAccessories)) {
+      for (let item of items) {
+        // if category and item are numbers, decode using shortString
+        if (!isNaN(Number(category)) && !isNaN(Number(item))) {
+          category = shortString.decodeShortString(category).toString();
+          item = shortString.decodeShortString(item).toString();
+        }
+
         const imagePath = path.join(process.cwd(), 'public', 'avatar', category, `${item}.png`);
         if (fs.existsSync(imagePath)) {
           const image = await loadImage(imagePath);
@@ -60,4 +67,3 @@ export async function GET(request: Request) {
     );
   }
 }
-// https://api.example.com/avatar/?acc[0]=bored_apes&acc[0][0]=hat&acc[0][1]=t-shirt&acc[1]=oxford&acc[1][0]=glasses

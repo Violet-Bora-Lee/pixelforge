@@ -149,21 +149,27 @@ fn test_token_uri_generation() {
     let avatar_address = deploy_avatar();
     let key1_address = deploy_wardrobe_key();
     let key2_address = deploy_wardrobe_key();
+    let key3_address = deploy_wardrobe_key();
     
     let avatar = IPixelForgeAvatarDispatcher { contract_address: avatar_address };
     let key1 = IWardrobeKeyDispatcher { contract_address: key1_address };
     let key2 = IWardrobeKeyDispatcher { contract_address: key2_address };
+    let key3 = IWardrobeKeyDispatcher { contract_address: key3_address };
     
     // Register two affiliates
     start_cheat_caller_address(avatar_address, OWNER());
     let affiliate1: felt252 = 'bored_apes';
     let affiliate2: felt252 = 'oxford';
+    let affiliate3: felt252 = 'punk_wear';
     avatar.register_affiliate(affiliate1, key1_address);
     avatar.register_affiliate(affiliate2, key2_address);
+    avatar.register_affiliate(affiliate3, key3_address);
     // Register accessories
     avatar.register_accessory(affiliate1, 'hat');
     avatar.register_accessory(affiliate1, 't-shirt');
+    avatar.register_accessory(affiliate1, 'other');
     avatar.register_accessory(affiliate2, 'glasses');
+    avatar.register_accessory(affiliate3, 'other');
     stop_cheat_caller_address(avatar_address);
 
     // Mint keys to USER
@@ -174,6 +180,10 @@ fn test_token_uri_generation() {
     start_cheat_caller_address(key2_address, OWNER());
     key2.mint(USER());
     stop_cheat_caller_address(key2_address);
+
+    start_cheat_caller_address(key3_address, OWNER());
+    key3.mint(USER());
+    stop_cheat_caller_address(key3_address);
 
     // USER mints avatar and equips accessories
     start_cheat_caller_address(avatar_address, USER());
@@ -208,7 +218,7 @@ fn test_token_uri_generation() {
     
     // The URI should contain base_uri + all equipped accessories in order
     // Expected format: https://api.example.com/avatar/?bored_apes=hat,t-shirt&oxford=glasses
-    // But it won't work because felts are formatted as numbers
+    // But it won't work because felts will are formatted as numbers
     let expected_uri: ByteArray = "https://api.example.com/avatar/?464847747018460782159219=6840692,32701070994666100&122562905338468=29111088405767539";
     println!("Expected URI: {}", expected_uri);
     println!("Generated URI: {}", token_uri);
