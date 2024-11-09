@@ -68,9 +68,8 @@ export default function Page() {
 
   }, [connectedAddress, isSepoliaNetwork]);
 
-  const sendMagicLink = async () => {
+  const handleSendMagicLinkButton = async () => {
     console.log("send magic link");
-    wrapInTryCatch(mintNewKey, "mintNewKey");
     router.push('/demo/minting-key');
   }
 
@@ -104,7 +103,7 @@ export default function Page() {
               />
               <button 
                 className="border border-[#9b94b3] w-full py-1 px-6 rounded-2xl text-gray-500 text-xl"
-                onClick={sendMagicLink}
+                onClick={handleSendMagicLinkButton}
                 >
                 send magic link!
               </button>
