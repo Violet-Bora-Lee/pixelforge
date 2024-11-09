@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
@@ -8,10 +8,6 @@ import { useAccount } from "~~/hooks/useAccount";
 
 import { useTargetNetwork } from "~~/hooks/scaffold-stark/useTargetNetwork";
 import { devnet, sepolia, mainnet } from "@starknet-react/chains";
-
-import { useDeployedContractInfo } from '~~/hooks/scaffold-stark';
-import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
-import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWriteContract';
 
 export default function Page() {
   useAutoConnect();
@@ -30,16 +26,6 @@ export default function Page() {
   const isMainnetNetwork =
     targetNetwork.id === mainnet.id &&
     targetNetwork.network === mainnet.network;
-
-
-  const { data: deployedContractData } = useDeployedContractInfo("WardrobeKeyBoredApes");
-
-  const { sendAsync: mintNewKey } = useScaffoldWriteContract({
-    contractName: "WardrobeKeyBoredApes",
-    functionName: "mint" as const,
-    args: [connectedAddress]
-  });
-
 
   const wrapInTryCatch =
     (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
@@ -62,6 +48,10 @@ export default function Page() {
       console.log("Currently on Local Network");
     }
 
+    if (isMainnetNetwork) {
+      console.log("Currently on Mainnet Network");
+    }
+
     console.log("connected account info: ", connectedAccountInfo);
     console.log("connected address: ", connectedAddress);
     console.log("status: ", status);
@@ -69,7 +59,7 @@ export default function Page() {
   }, [connectedAddress, isSepoliaNetwork]);
 
   const handleSendMagicLinkButton = async () => {
-    console.log("send magic link");
+    console.log("click 'send magic link' button");
     router.push('/demo/minting-key');
   }
 
