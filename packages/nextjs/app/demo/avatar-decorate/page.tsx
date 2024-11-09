@@ -6,7 +6,6 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
 
-import { useDeployedContractInfo } from '~~/hooks/scaffold-stark';
 import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
 import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWriteContract';
 import { shortString } from "starknet";
@@ -55,13 +54,6 @@ export default function Page() {
     
     handleUpdateAccessory(result.destination.droppableId);
   };
-
-
-  const { sendAsync: readAccessory } = useScaffoldReadContract({
-    contractName: "PixelForgeAvatar",
-    functionName: "get_accessories_for_affiliate" as const,
-    args: [undefined] // TODO: pass felt252 type affiliate_id
-  });
 
   const { sendAsync: updateAccessory } = useScaffoldWriteContract({
     contractName: "PixelForgeAvatar",
