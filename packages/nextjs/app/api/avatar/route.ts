@@ -1,8 +1,4 @@
 import { NextResponse } from 'next/server';
-import { createCanvas, loadImage } from 'canvas';
-import path from 'path';
-import fs from 'fs';
-import { accessoriesConfig } from './accessories';
 import { shortString } from 'starknet';
 
 export async function GET(request: Request) {

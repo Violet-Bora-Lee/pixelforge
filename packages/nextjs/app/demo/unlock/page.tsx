@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
@@ -66,9 +66,30 @@ export default function Page() {
     router.push("/demo/checking-wallet");
   };
 
+  const [email, setEmail] = useState("");
+
   const handleSendMagicLinkButton = async () => {
     console.log("click 'send magic link' button");
-    router.push("/demo/minting-key");
+
+    try {
+      const response = await fetch("/api/sendMagicLink", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send magic link");
+      }
+
+      const data = await response.json();
+      console.log(data.message);
+      router.push("/demo/minting-key");
+    } catch (error) {
+      console.error("Error sending magic link:", error);
+    }
   };
 
   return (
@@ -101,6 +122,8 @@ export default function Page() {
                 type="email"
                 className="w-full py-1 px-6 rounded-2xl border border-[#9b94b3] focus:border-[#9b94b3] focus:border focus:outline-none focus-visible:outline-none focus-visible:ring-0"
                 placeholder=""
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button
                 className="border border-[#9b94b3] w-full py-1 px-6 rounded-2xl text-gray-500 text-xl"

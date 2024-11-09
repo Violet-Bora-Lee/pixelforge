@@ -3,6 +3,7 @@ use starknet::{ContractAddress};
 #[starknet::interface]
 pub trait IWardrobeKey<TContractState> {
     fn mint(ref self: TContractState, to: ContractAddress);
+    fn mint_signed(ref self: TContractState, to: ContractAddress, signature: Span<felt252>);
 }
 
 #[starknet::contract]
@@ -63,6 +64,11 @@ mod WardrobeKey {
             let new_token_id = self.last_token_id.read() + 1;
             self.last_token_id.write(new_token_id);
             self.erc721.mint(to, new_token_id);
+        }
+
+        fn mint_signed(ref self: ContractState, to: ContractAddress, signature: Span<felt252>) {
+            // TODO: implement signature verification
+            self.mint(to);
         }
     }
 
