@@ -47,7 +47,7 @@ const deployScript = async (): Promise<void> => {
     contract: "WardrobeKey",
     constructorArgs: {
       owner: deployer.address,
-      base_uri: "https://pixelforge.io/bored-apes-key/", // TODO: change this to the actual base uri
+      base_uri: "https://pixelforge-nextjs.vercel.app/api/bored-apes-key", // TODO: change this to the actual base uri
     },
     contractName: "WardrobeKeyBoredApes",
   });
@@ -57,7 +57,7 @@ const deployScript = async (): Promise<void> => {
     contractName: "WardrobeKeyOxford",
     constructorArgs: {
       owner: deployer.address,
-      base_uri: "https://pixelforge.io/oxford-key/",
+      base_uri: "https://pixelforge-nextjs.vercel.app/api/oxford-key",
     },
   });
   // Deploy PixelForgeAvatar
@@ -65,7 +65,7 @@ const deployScript = async (): Promise<void> => {
     contract: "PixelForgeAvatar",
     constructorArgs: {
       owner: deployer.address,
-      base_uri: "https://pixelforge.io/avatar/",
+      base_uri: "https://pixelforge-nextjs.vercel.app/api/avatar",
     },
   });
   // Register affiliates

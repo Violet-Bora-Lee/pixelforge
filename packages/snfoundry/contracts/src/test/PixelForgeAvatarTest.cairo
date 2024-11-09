@@ -177,7 +177,8 @@ fn test_token_uri_generation() {
 
     // USER mints avatar and equips accessories
     start_cheat_caller_address(avatar_address, USER());
-    avatar.mint();
+    // No need to mint, as it's done automatically if there's no token
+    // avatar.mint();
 
     let user_felt: felt252 = USER().into();
     let token_id: u256 = user_felt.into();

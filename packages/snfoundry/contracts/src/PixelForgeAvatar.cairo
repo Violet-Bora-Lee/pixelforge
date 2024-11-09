@@ -103,9 +103,11 @@ mod PixelForgeAvatar {
             let caller_as_felt: felt252 = caller.into();
             let token_id = caller_as_felt.into();
 
-            // check if the caller has the token
-            let owner = self.erc721.owner_of(token_id);
-            assert(owner == caller, 'Caller does not own the token');
+            // check if the caller has the token, mint otherwise
+            let balance = self.erc721.balance_of(caller);
+            if balance == 0 {
+                self.erc721.mint(caller, caller_as_felt.into());
+            }
 
             // Oh that will take a lot of gas
             for accessory in accessory_list {
