@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 import { useAutoConnect } from "~~/hooks/scaffold-stark";
 import { useAccount } from "~~/hooks/useAccount";
@@ -14,7 +14,11 @@ export default function Page() {
 
   const router = useRouter();
 
-  const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
+  const {
+    account: connectedAccountInfo,
+    address: connectedAddress,
+    status,
+  } = useAccount();
 
   const { targetNetwork } = useTargetNetwork();
 
@@ -34,7 +38,7 @@ export default function Page() {
       } catch (error) {
         console.error(
           `Error calling ${errorMessageFnDescription} function`,
-          error,
+          error
         );
       }
     };
@@ -55,13 +59,17 @@ export default function Page() {
     console.log("connected account info: ", connectedAccountInfo);
     console.log("connected address: ", connectedAddress);
     console.log("status: ", status);
-
   }, [connectedAddress, isSepoliaNetwork]);
+
+  const handleUnlockByNftButton = async () => {
+    console.log("click 'unlock by nft' button");
+    router.push("/demo/checking-wallet");
+  };
 
   const handleSendMagicLinkButton = async () => {
     console.log("click 'send magic link' button");
-    router.push('/demo/minting-key');
-  }
+    router.push("/demo/minting-key");
+  };
 
   return (
     <div className="flex w-full min-h-full mb-[125px] justify-center items-center">
@@ -73,7 +81,10 @@ export default function Page() {
               <p>Show us your NFT treasure!</p>
             </div>
 
-            <button className="border border-[#9b94b3] w-full py-1 px-6 rounded-2xl text-gray-500 text-xl">
+            <button
+              className="border border-[#9b94b3] w-full py-1 px-6 rounded-2xl text-gray-500 text-xl"
+              onClick={handleUnlockByNftButton}
+            >
               unlock by nft
             </button>
           </div>
@@ -91,10 +102,10 @@ export default function Page() {
                 className="w-full py-1 px-6 rounded-2xl border border-[#9b94b3] focus:border-[#9b94b3] focus:border focus:outline-none focus-visible:outline-none focus-visible:ring-0"
                 placeholder=""
               />
-              <button 
+              <button
                 className="border border-[#9b94b3] w-full py-1 px-6 rounded-2xl text-gray-500 text-xl"
                 onClick={handleSendMagicLinkButton}
-                >
+              >
                 send magic link!
               </button>
             </div>
