@@ -26,27 +26,41 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateAccessory = async (destinationId: string) => {
-    try {
+    const updateAccessoryWithDestination = async () => {
       setIsLoading(true);
-      if (destinationId === 'character') {
+      try {
         const result = await updateAccessory();
         if (result) {
-          setHasHat(true);
-          setShowHatInCabinet(false);
+          if (destinationId === 'character') {
+            setHasHat(true);
+            setShowHatInCabinet(false);
+          } else {
+            setHasHat(false);
+            setShowHatInCabinet(true);
+          }
         }
-      } else {
-        const result = await updateAccessory();
-        if (result) {
-          setHasHat(false);
-          setShowHatInCabinet(true);
-        }
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Failed to update accessory:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    };
+
+    await wrapInTryCatch(
+      updateAccessoryWithDestination,
+      `update accessory to ${destinationId}`
+    )();
   };
+
+  const wrapInTryCatch =
+    (fn: () => Promise<any>, errorMessageFnDescription: string) => async () => {
+      try {
+        await fn();
+      } catch (error) {
+        console.error(
+          `Error calling ${errorMessageFnDescription} function`,
+          error
+        );
+      }
+    };
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
