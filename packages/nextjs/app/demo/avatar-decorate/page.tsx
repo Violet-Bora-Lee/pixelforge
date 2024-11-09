@@ -1,23 +1,100 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
+import { useAutoConnect } from "~~/hooks/scaffold-stark";
+import { useAccount } from "~~/hooks/useAccount";
+
+import { useDeployedContractInfo } from '~~/hooks/scaffold-stark';
+import { useScaffoldReadContract } from "~~/hooks/scaffold-stark/useScaffoldReadContract";
+import { useScaffoldWriteContract } from '~~/hooks/scaffold-stark/useScaffoldWriteContract';
+import { shortString } from "starknet";
+
 export default function Page() {
+  useAutoConnect();
+  const { account: connectedAccountInfo, address: connectedAddress, status } = useAccount();
+
+  useEffect(() => {
+    console.log("account info: ", connectedAccountInfo);
+    console.log("address: ", connectedAddress);
+    console.log("status: ", status);
+  }, [connectedAddress]);
+
   const [hasHat, setHasHat] = React.useState(false);
   const [showHatInCabinet, setShowHatInCabinet] = React.useState(true);
+
+  const handleUpdateAccessory = async (destinationId: string) => {
+    try {
+      if (destinationId === 'character') {
+        // 모자를 착용하는 경우
+        const result = await updateAccessory(); // updateAccessory 함수 호출
+        if (result) { // 성공적으로 업데이트된 경우
+          setHasHat(true);
+          setShowHatInCabinet(false);
+        }
+      } else {
+        // 모자를 벗는 경우
+        const result = await updateAccessory(); // updateAccessory 함수 호출
+        if (result) { // 성공적으로 업데이트된 경우
+          setHasHat(false);
+          setShowHatInCabinet(true);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to update accessory:', error);
+      // 에러 처리 - 필요한 경우 사용자에게 알림
+    }
+  };
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
     
-    if (result.destination.droppableId === 'character') {
-      setHasHat(true);
-      setShowHatInCabinet(false);
-    } else {
-      setHasHat(false);
-      setShowHatInCabinet(true);
-    }
+    handleUpdateAccessory(result.destination.droppableId);
   };
+
+  const [selectedItems, setSelectedItems] = useState<number[]>([]);
+  const [selectedAffiliate, setSelectedAffiliate] = useState<number | null>(null);
+
+  const { data: pixelForgeAvatarContractData } = useDeployedContractInfo("PixelForgeAvatar");
+
+  
+  const { sendAsync: getAffiliateContractData } = useScaffoldReadContract({
+    contractName: "PixelForgeAvatar",
+    functionName: "get_affiliates" as const,
+    args: [] // no args
+  });
+
+  // const {data: affiliatesData} = getAffiliateContractData();
+
+  // const selectedAffiliateString = affiliatesData && selectedAffiliate !== null 
+  //   // @ts-ignore
+  //   ? shortString.decodeShortString(affiliatesData[selectedAffiliate].toString())
+  //   : "";
+
+  const { sendAsync: readAccessory } = useScaffoldReadContract({
+    contractName: "PixelForgeAvatar",
+    functionName: "get_accessories_for_affiliate" as const,
+    args: [undefined] // TODO: pass felt252 type affiliate_id
+  });
+
+  const { sendAsync: updateAccessory } = useScaffoldWriteContract({
+    contractName: "PixelForgeAvatar",
+    functionName: "update_accessories" as const,
+    // TODO: pass felt252 type affiliate_id, felt252 type accessory_id, bool type is_on with real values
+    args: [[
+      // {
+      //   affiliate_id: shortString.encodeShortString("bored_apes"), // "bored_apes" encoded as felt252
+      //   accessory_id: shortString.encodeShortString("hat"),        // "hat" encoded as felt252
+      //   is_on: true
+      // },
+      {
+        affiliate_id: shortString.encodeShortString("bored_apes"), // "bored_apes" encoded as felt252
+        accessory_id: shortString.encodeShortString("t-shirt"),    // "t-shirt" encoded as felt252
+        is_on: true
+      }
+    ]]
+  });
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
