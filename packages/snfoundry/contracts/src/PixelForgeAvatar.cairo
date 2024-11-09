@@ -168,21 +168,29 @@ mod PixelForgeAvatar {
             let mut token_uri = self.erc721._base_uri();
 
             // Iterate over all accessories and compose the URL from weared ones:
-            // http://base_uri?aff[0]=bored_apes&acc[0][0]=hat&acc[0][1]=t-shirt&aff[1]=oxford&acc[1][0]=hat
+            // http://base_uri?bored_apes=hat,t-shirt&oxford=hat
 
+            let mut first_affiliate = true;
             for i in 0..self.all_affiliates_list.len() {
                 let affiliate_id = self.all_affiliates_list.at(i).read();
                 let accessories = self.all_accessories_list.entry(affiliate_id);
                 let mut aff_used = false;
                 for j in 0..accessories.len() {
                     if !aff_used {
-                        token_uri = format!("{}&aff[{}]={}", token_uri, i, affiliate_id);
+                        if first_affiliate {
+                            token_uri = format!("{}?{}=", token_uri, affiliate_id);
+                            first_affiliate = false;
+                        } else {
+                            token_uri = format!("{}&{}=", token_uri, affiliate_id);
+                        }
                         aff_used = true;
+                    } else {
+                        token_uri = format!("{},", token_uri);
                     }
                     let accessory_id = accessories.at(j).read();
                     let is_on = self.item_accessories.entry(token_id).entry(affiliate_id).entry(accessory_id).read();
                     if is_on {
-                        token_uri = format!("{}&acc[{}][{}]={}", token_uri, i, j, accessory_id);
+                        token_uri = format!("{}{}", token_uri, accessory_id);
                     }
                 }
             };

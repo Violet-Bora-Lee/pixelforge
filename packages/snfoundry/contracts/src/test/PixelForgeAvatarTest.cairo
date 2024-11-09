@@ -207,9 +207,9 @@ fn test_token_uri_generation() {
     let token_uri = avatar.token_uri(token_id);
     
     // The URI should contain base_uri + all equipped accessories in order
-    // Expected format: https://api.example.com/avatar/?aff[0]=bored_apes&acc[0][0]=hat&acc[0][1]=t-shirt&aff[1]=oxford&acc[1][0]=glasses
-    // But it won't work because felts will be formatted as numbers
-    let expected_uri: ByteArray = "https://api.example.com/avatar/&aff[0]=464847747018460782159219&acc[0][0]=6840692&acc[0][1]=32701070994666100&aff[1]=122562905338468&acc[1][0]=29111088405767539";
+    // Expected format: https://api.example.com/avatar/?bored_apes=hat,t-shirt&oxford=glasses
+    // But it won't work because felts are formatted as numbers
+    let expected_uri: ByteArray = "https://api.example.com/avatar/?464847747018460782159219=6840692,32701070994666100&122562905338468=29111088405767539";
     println!("Expected URI: {}", expected_uri);
     println!("Generated URI: {}", token_uri);
     assert(token_uri == expected_uri, 'Wrong token URI generated');

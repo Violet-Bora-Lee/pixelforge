@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { RpcProvider, Account, Contract, shortString } from 'starknet';
 import deployedContracts from '~~/contracts/deployedContracts';
+import scaffoldConfig from '~~/scaffold.config';
 
 // Load contract details
-const { address: avatarAddress, abi: avatarAbi } = deployedContracts.devnet.PixelForgeAvatar;
+const preferredChain = scaffoldConfig.targetNetworks[0].network as ("devnet" | "sepolia");
+const { address: avatarAddress, abi: avatarAbi } = deployedContracts[preferredChain].PixelForgeAvatar;
 
 // Setup provider and account
 const rpcUrl = process.env.NEXT_PUBLIC_PROVIDER_URL || "http://localhost:5050"
