@@ -1953,7 +1953,7 @@ const deployedContracts = {
   sepolia: {
     WardrobeKeyBoredApes: {
       address:
-        "0x70894bd11908d1160ea835cf1cfc4ddfa0cacf9f159e5d6d7c93788bcde509b",
+        "0x2221facd9d1581fdcab071ea766e55263b406ebd30468f316ee443750e01e52",
       abi: [
         {
           type: "impl",
@@ -2615,7 +2615,7 @@ const deployedContracts = {
     },
     WardrobeKeyOxford: {
       address:
-        "0x1d1edef71e87485ef2a084f297efe095d8b093162c2ef8b3301f80f649683b2",
+        "0x5fea4be056101351f33d77fd8b5e85fcfd47d45e157320445bc502b492af7d",
       abi: [
         {
           type: "impl",
@@ -3277,7 +3277,7 @@ const deployedContracts = {
     },
     PixelForgeAvatar: {
       address:
-        "0x3f5b4fc19e10606f5ec87d25b63b61b24518628bcad7cfcdd564bc9dc513eab",
+        "0x317dc799e5ec00b9af1e81c9ed325ffaabe4302c9b0082ef764a963543abd5c",
       abi: [
         {
           type: "impl",
@@ -3893,7 +3893,7 @@ const deployedContracts = {
         },
       ],
       classHash:
-        "0x2e1a2a558b0e5a982a0fb7604ec1fab25667285d69a8301419cc9b502435fb9",
+        "0xa81def2a2399bdbfb89a44ea9f2f7b281b2d04b1623669a02b02c65febf7d1",
     },
   },
 } as const;
